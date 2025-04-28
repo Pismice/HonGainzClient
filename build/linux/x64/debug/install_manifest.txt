@@ -1,0 +1,13 @@
+/home/tetratrux/projects/HonGainz/HonGainzClient/build/linux/x64/debug/bundle/fronte
+/home/tetratrux/projects/HonGainz/HonGainzClient/build/linux/x64/debug/bundle/data/icudtl.dat
+/home/tetratrux/projects/HonGainz/HonGainzClient/build/linux/x64/debug/bundle/lib/libflutter_linux_gtk.so
+/home/tetratrux/projects/HonGainz/HonGainzClient/build/linux/x64/debug/bundle/lib/libflutter_secure_storage_linux_plugin.so
+/home/tetratrux/projects/HonGainz/HonGainzClient/build/linux/x64/debug/bundle/data/flutter_assets/version.json
+/home/tetratrux/projects/HonGainz/HonGainzClient/build/linux/x64/debug/bundle/data/flutter_assets/AssetManifest.bin
+/home/tetratrux/projects/HonGainz/HonGainzClient/build/linux/x64/debug/bundle/data/flutter_assets/AssetManifest.json
+/home/tetratrux/projects/HonGainz/HonGainzClient/build/linux/x64/debug/bundle/data/flutter_assets/NOTICES.Z
+/home/tetratrux/projects/HonGainz/HonGainzClient/build/linux/x64/debug/bundle/data/flutter_assets/fonts/MaterialIcons-Regular.otf
+/home/tetratrux/projects/HonGainz/HonGainzClient/build/linux/x64/debug/bundle/data/flutter_assets/FontManifest.json
+/home/tetratrux/projects/HonGainz/HonGainzClient/build/linux/x64/debug/bundle/data/flutter_assets/shaders/ink_sparkle.frag
+/home/tetratrux/projects/HonGainz/HonGainzClient/build/linux/x64/debug/bundle/data/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+/home/tetratrux/projects/HonGainz/HonGainzClient/build/linux/x64/debug/bundle/data/flutter_assets/kernel_blob.bin
