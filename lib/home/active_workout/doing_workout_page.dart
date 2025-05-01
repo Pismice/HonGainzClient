@@ -24,13 +24,51 @@ class ActiveWorkoutPage extends StatefulWidget {
   _ActiveWorkoutPageState createState() => _ActiveWorkoutPageState();
 }
 
-class _ActiveWorkoutPageState extends State<ActiveWorkoutPage> {
+class _ActiveWorkoutPageState extends State<ActiveWorkoutPage> with RouteAware {
   late List<RealSession> _sessions;
+  late bool _allSessionsFinished; // Add to state
 
   @override
   void initState() {
     super.initState();
     _sessions = List.from(widget.sessions); // Initialize with provided sessions
+    _updateAllSessionsFinished(); // Initialize _allSessionsFinished
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Register this widget with the RouteObserver
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
+  @override
+  void dispose() {
+    // Unregister from the RouteObserver
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    // Called when returning to this page
+    fetchActiveRealWorkout().then((updatedWorkout) {
+      if (updatedWorkout != null) {
+        setState(() {
+          _sessions = updatedWorkout.sessions; // Update sessions
+          _updateAllSessionsFinished(); // Refresh state
+        });
+      }
+    }).catchError((e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error fetching workout: $e')),
+      );
+    });
+  }
+
+  void _updateAllSessionsFinished() {
+    _allSessionsFinished =
+        _sessions.every((session) => session.finishDate != null);
   }
 
   Future<void> _createRealSessions(BuildContext context) async {
@@ -41,6 +79,7 @@ class _ActiveWorkoutPageState extends State<ActiveWorkoutPage> {
       if (updatedWorkout != null) {
         setState(() {
           _sessions = updatedWorkout.sessions; // Update sessions
+          _updateAllSessionsFinished(); // Update _allSessionsFinished
         });
       }
       ScaffoldMessenger.of(context).showSnackBar(
@@ -54,7 +93,6 @@ class _ActiveWorkoutPageState extends State<ActiveWorkoutPage> {
   }
 
   void deactivateWorkout(BuildContext context) async {
-
     var url = Uri.parse('${baseUrl}auth/active-workout');
     try {
       final response = await http.delete(
@@ -112,9 +150,6 @@ class _ActiveWorkoutPageState extends State<ActiveWorkoutPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool allSessionsFinished =
-        _sessions.every((session) => session.finishDate != null);
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -159,7 +194,7 @@ class _ActiveWorkoutPageState extends State<ActiveWorkoutPage> {
         padding: const EdgeInsets.all(16.0),
         child: ElevatedButton(
           onPressed:
-              allSessionsFinished ? () => _createRealSessions(context) : null,
+              _allSessionsFinished ? () => _createRealSessions(context) : null,
           style: ElevatedButton.styleFrom(
             minimumSize: const Size.fromHeight(100), // Increased height
             shape: const RoundedRectangleBorder(

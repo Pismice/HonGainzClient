@@ -15,7 +15,7 @@ class DoingSession extends StatefulWidget {
 
 class _DoingSessionState extends State<DoingSession> {
   Timer? _timer;
-  int _elapsedSeconds = 0;
+  int _elapsedSeconds = -1;
   List<RealExercise> _exercises = []; // List of exercises
 
   @override
@@ -80,6 +80,7 @@ class _DoingSessionState extends State<DoingSession> {
         _elapsedSeconds = 0; // Reset elapsed time
       }
 
+      setState(() {}); // Update the UI immediately
       _startTimerWithoutReset(); // Start the timer
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
