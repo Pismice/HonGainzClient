@@ -21,7 +21,8 @@ Future<List<TemplateSession>> fetchTemplateSessions() async {
 
     if (response.statusCode == 200) {
       var data = convert.json.decode(response.body);
-      if (data.containsKey("template_sessions")) {
+      if (data.containsKey("template_sessions") &&
+          data["template_sessions"] != null) {
         List<dynamic> sessionsJson = data["template_sessions"];
         return sessionsJson
             .map((s) => TemplateSession(
@@ -30,6 +31,8 @@ Future<List<TemplateSession>> fetchTemplateSessions() async {
                   exerciseIds: List<int>.from(s["exercise_ids"] ?? []),
                 ))
             .toList();
+      } else {
+        return []; // Return an empty list if "template_sessions" is null
       }
     } else {
       final error = convert.json.decode(response.body)['error'];
@@ -43,7 +46,6 @@ Future<List<TemplateSession>> fetchTemplateSessions() async {
     throw Exception(
         'Error fetching template sessions: $e'); // Propagate the error
   }
-  return [];
 }
 
 Future<void> modifySession(int id, String newName) async {

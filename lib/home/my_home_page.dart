@@ -59,14 +59,15 @@ class _MyHomePageState extends State<MyHomePage> {
               ); // Use NoActiveWorkoutPage widget
             } else {
               final workoutName = activeWorkout["name"];
-              final sessions = (activeWorkout["sessions"] as List<dynamic>)
-                  .map((session) => RealSession(
-                        id: session["id"],
-                        name: session["name"],
-                        startDate: session["start_date"],
-                        finishDate: session["finish_date"],
-                      ))
-                  .toList(); // Cast to List<Session>
+              final sessions =
+                  (activeWorkout["sessions"] as List<dynamic>? ?? [])
+                      .map((session) => RealSession(
+                            id: session["id"],
+                            name: session["name"],
+                            startDate: session["start_date"],
+                            finishDate: session["finish_date"],
+                          ))
+                      .toList(); // Cast to List<Session>
               return ActiveWorkoutPage(
                 realWorkoutId: activeWorkout["id"],
                 workoutName: workoutName,

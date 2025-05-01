@@ -164,7 +164,7 @@ class _DoingSessionState extends State<DoingSession> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(0), // Remove padding for full width
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -189,27 +189,37 @@ class _DoingSessionState extends State<DoingSession> {
               const SizedBox(height: 16),
             if (widget.session.startDate != null &&
                 widget.session.finishDate == null)
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    await finishSession(
-                        widget.session.id); // Call finishSession
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                          content: Text('Session finished successfully')),
-                    );
-                    Navigator.pop(
-                        context, true); // Navigate back and indicate success
-                  } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Error: $e')),
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size.fromHeight(70), // Larger button
+              SizedBox(
+                width: double.infinity, // Full width
+                child: ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      await finishSession(
+                          widget.session.id); // Call finishSession
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text('Session finished successfully')),
+                      );
+                      Navigator.pop(
+                          context, true); // Navigate back and indicate success
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Error: $e')),
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green, // Green button
+                    minimumSize: const Size.fromHeight(100), // Increased height
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero, // No rounded corners
+                    ),
+                  ),
+                  child: const Text(
+                    "Finish Session",
+                    style: TextStyle(fontSize: 30.0), // Larger text
+                  ),
                 ),
-                child: const Text("Finish Session"),
               ),
           ],
         ),

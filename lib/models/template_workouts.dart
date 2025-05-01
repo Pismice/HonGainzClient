@@ -18,10 +18,12 @@ Future<List<TemplateWorkout>> fetchTemplateWorkouts() async {
       "Content-Type": "application/json",
       "Authorization": "Bearer ${await storage.read(key: "session_id")}"
     });
+    print(response.body);
 
     if (response.statusCode == 200) {
       var data = convert.json.decode(response.body);
-      if (data.containsKey("template_workouts")) {
+      if (data.containsKey("template_workouts") &&
+          data["template_workouts"] != null) {
         List<dynamic> workoutsJson = data["template_workouts"];
         return workoutsJson.map((w) {
           List<int> sessionIds = List<int>.from(w["session_ids"] ?? []);
@@ -31,6 +33,8 @@ Future<List<TemplateWorkout>> fetchTemplateWorkouts() async {
             sessionIds: sessionIds,
           );
         }).toList();
+      } else {
+        return []; // Return an empty list if "template_workouts" is null
       }
     } else {
       final error = convert.json.decode(response.body)['error'];
@@ -44,7 +48,6 @@ Future<List<TemplateWorkout>> fetchTemplateWorkouts() async {
     throw Exception(
         'Error fetching template workouts: $e'); // Propagate the error
   }
-  return [];
 }
 
 Future<void> deleteWorkout(int id) async {
