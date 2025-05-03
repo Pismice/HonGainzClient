@@ -1,6 +1,8 @@
+import 'package:fronte/auth/helper.dart';
 import 'package:fronte/globals.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
 
 class TemplateExercise {
   final int id;
@@ -26,7 +28,8 @@ class TemplateExercise {
   }
 }
 
-Future<List<TemplateExercise>> fetchTemplateExercises() async {
+Future<List<TemplateExercise>> fetchTemplateExercises(
+    BuildContext context) async {
   var url = Uri.parse("${baseUrl}auth/template-exercises"); // API endpoint
 
   try {
@@ -37,15 +40,26 @@ Future<List<TemplateExercise>> fetchTemplateExercises() async {
 
     if (response.statusCode == 200) {
       var data = convert.json.decode(response.body);
-      if (data.containsKey("template_exercises")) {
+      if (data.containsKey("template_exercises") &&
+          data["template_exercises"] != null) {
         List<dynamic> exercisesJson = data["template_exercises"];
         return exercisesJson.map((e) => TemplateExercise.fromJson(e)).toList();
+      } else {
+        return []; // Return an empty list if "template_exercises" is null
       }
+    } else {
+      final error = convert.json.decode(response.body)['error'];
+      if (error == "Invalid session") {
+        navigateToLogin(context);
+        throw Exception("InvalidSessionError"); // Specific error
+      }
+      throw Exception(
+          'Failed to fetch template exercises: $error'); // General error
     }
   } catch (e) {
-    print('Error fetching template exercises: $e');
+    throw Exception(
+        'Error fetching template exercises: $e'); // Propagate the error
   }
-  return [];
 }
 
 Future<void> modifyExercise(int id, String newName) async {

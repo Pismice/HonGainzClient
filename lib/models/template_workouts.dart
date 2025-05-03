@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:fronte/auth/helper.dart';
 import 'package:fronte/globals.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
@@ -11,7 +13,8 @@ class TemplateWorkout {
       {required this.id, required this.name, required this.sessionIds});
 }
 
-Future<List<TemplateWorkout>> fetchTemplateWorkouts() async {
+Future<List<TemplateWorkout>> fetchTemplateWorkouts(
+    BuildContext context) async {
   var url = Uri.parse("${baseUrl}auth/template-workouts"); // API endpoint
   try {
     var response = await http.get(url, headers: {
@@ -39,6 +42,8 @@ Future<List<TemplateWorkout>> fetchTemplateWorkouts() async {
     } else {
       final error = convert.json.decode(response.body)['error'];
       if (error == "Invalid session") {
+        print("lol");
+        navigateToLogin(context); // Ensure context is passed to this function
         throw Exception("InvalidSessionError"); // Specific error
       }
       throw Exception(

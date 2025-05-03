@@ -16,12 +16,12 @@ class SessionListState extends State<SessionList> {
   @override
   void initState() {
     super.initState();
-    _sessionsFuture = fetchTemplateSessions();
+    _sessionsFuture = fetchTemplateSessions(context);
   }
 
   void refreshSessions() {
     setState(() {
-      _sessionsFuture = fetchTemplateSessions();
+      _sessionsFuture = fetchTemplateSessions(context);
     });
   }
 

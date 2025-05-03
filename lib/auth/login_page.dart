@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
         // Handle network or other errors
         debugPrint(e.toString());
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("An error occurred. Please try again.")),
+          const SnackBar(content: Text("Could not connect to the server")),
         );
       }
     } else {

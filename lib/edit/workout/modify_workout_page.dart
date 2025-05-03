@@ -29,7 +29,7 @@ class _ModifyWorkoutPageState extends State<ModifyWorkoutPage> {
     super.initState();
     _nameController = TextEditingController(text: widget.initialName);
     _selectedSessionIds = List<int>.from(widget.initialSessionIds);
-    _sessionsFuture = fetchTemplateSessions(); // Fetch sessions
+    _sessionsFuture = fetchTemplateSessions(context); // Fetch sessions
   }
 
   Future<void> _modifyWorkout() async {

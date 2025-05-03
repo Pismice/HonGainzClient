@@ -19,12 +19,12 @@ class WorkoutListState extends State<WorkoutList> {
   @override
   void initState() {
     super.initState();
-    _workoutsFuture = fetchTemplateWorkouts();
+    _workoutsFuture = fetchTemplateWorkouts(context);
   }
 
   void refreshWorkouts() {
     setState(() {
-      _workoutsFuture = fetchTemplateWorkouts();
+      _workoutsFuture = fetchTemplateWorkouts(context);
     });
   }
 

@@ -18,7 +18,7 @@ class _NewWorkoutPageState extends State<NewWorkoutPage> {
   @override
   void initState() {
     super.initState();
-    _sessionsFuture = fetchTemplateSessions(); // Fetch sessions
+    _sessionsFuture = fetchTemplateSessions(context); // Fetch sessions
   }
 
   Future<void> _createWorkout() async {

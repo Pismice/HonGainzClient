@@ -14,12 +14,12 @@ class ExerciseListState extends State<ExerciseList> {
   @override
   void initState() {
     super.initState();
-    _exercisesFuture = fetchTemplateExercises();
+    _exercisesFuture = fetchTemplateExercises(context);
   }
 
   void refreshExercises() {
     setState(() {
-      _exercisesFuture = fetchTemplateExercises();
+      _exercisesFuture = fetchTemplateExercises(context);
     });
   }
 

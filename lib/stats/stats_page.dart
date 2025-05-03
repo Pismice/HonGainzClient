@@ -15,7 +15,7 @@ class _StatsPageState extends State<StatsPage> {
   @override
   void initState() {
     super.initState();
-    _templateExercisesFuture = fetchTemplateExercises();
+    _templateExercisesFuture = fetchTemplateExercises(context);
   }
 
   @override
