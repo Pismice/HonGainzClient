@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fronte/globals.dart';
-import 'package:fronte/models/template_exercises.dart'; // Import exercises.dart
+import 'package:fronte/endpoints/template_exercises.dart'; // Import exercises.dart
 import 'package:http/http.dart' as http;
 
 class ModifySessionPage extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fronte/models/real_sessions.dart';
-import 'package:fronte/models/real_workouts.dart';
+import 'package:fronte/endpoints/real_sessions.dart';
+import 'package:fronte/endpoints/real_workouts.dart';
 import '../settings/settings_page.dart'; // Import SettingsPage
 import 'active_workout/doing_workout_page.dart'; // Import ActiveWorkoutPage
 import 'no_active_workout/no_active_workout_page.dart'; // Import NoActiveWorkoutPage

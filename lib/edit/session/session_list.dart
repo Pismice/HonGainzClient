@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fronte/models/template_sessions.dart';
+import 'package:fronte/endpoints/template_sessions.dart';
 
 import 'modify_session_page.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fronte/models/real_sessions.dart';
+import 'package:fronte/endpoints/real_sessions.dart';
 import '../active_session/doing_session_page.dart'; // Import DoingSession
-import 'package:fronte/models/real_workouts.dart';
+import 'package:fronte/endpoints/real_workouts.dart';
 
 class SessionList extends StatefulWidget {
   final List<RealSession> sessions; // Use a single variable

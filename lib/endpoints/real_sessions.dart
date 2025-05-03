@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fronte/globals.dart';
-import 'package:fronte/models/real_exercises.dart'; // Import RealExercise model
+import 'package:fronte/endpoints/real_exercises.dart'; // Import RealExercise model
 
 class RealSession {
   final int id;
@@ -28,8 +28,12 @@ class RealSession {
       id: json['id'],
       templateSessionId: json['template_session_id'],
       realWorkoutId: json['real_workout_id'],
-      startDate: json['start_date'],
-      finishDate: json['finish_date'],
+      startDate: json['start_date'] == ""
+          ? null
+          : json['start_date'], // Handle empty string
+      finishDate: json['finish_date'] == ""
+          ? null
+          : json['finish_date'], // Handle empty string
       userId: json['user_id'],
     );
   }

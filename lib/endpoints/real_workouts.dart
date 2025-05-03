@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:fronte/globals.dart';
-import 'package:fronte/models/real_sessions.dart';
+import 'package:fronte/endpoints/real_sessions.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 

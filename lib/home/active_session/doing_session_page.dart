@@ -1,8 +1,8 @@
 import 'dart:async'; // Import for Timer
 import 'package:flutter/material.dart';
 import 'package:fronte/home/active_exercise/doing_exercise_page.dart'; // Import DoingExercisePage
-import 'package:fronte/models/real_exercises.dart'; // Import RealExercise model
-import 'package:fronte/models/real_sessions.dart';
+import 'package:fronte/endpoints/real_exercises.dart'; // Import RealExercise model
+import 'package:fronte/endpoints/real_sessions.dart';
 
 class DoingSession extends StatefulWidget {
   final RealSession session;

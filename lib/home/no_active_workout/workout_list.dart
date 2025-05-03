@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fronte/globals.dart';
-import 'package:fronte/models/template_workouts.dart';
+import 'package:fronte/endpoints/template_workouts.dart';
 import 'package:http/http.dart' as http; // Add this import
 import 'dart:convert'; // Add this import for JSON encoding
 

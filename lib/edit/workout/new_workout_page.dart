@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fronte/globals.dart';
-import 'package:fronte/models/template_sessions.dart';
+import 'package:fronte/endpoints/template_sessions.dart';
 import 'package:http/http.dart' as http;
 
 class NewWorkoutPage extends StatefulWidget {

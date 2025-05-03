@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fronte/models/real_exercises.dart';
-import 'package:fronte/models/stats.dart'; // Import fetchMaxWeight
+import 'package:fronte/endpoints/real_exercises.dart';
+import 'package:fronte/endpoints/stats.dart'; // Import fetchMaxWeight
 import 'package:confetti/confetti.dart'; // Import Confetti package
 
 class DoingExercisePage extends StatefulWidget {

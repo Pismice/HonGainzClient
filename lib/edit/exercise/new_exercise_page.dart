@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fronte/models/template_exercises.dart';
+import 'package:fronte/endpoints/template_exercises.dart';
 
 class NewExercisePage extends StatefulWidget {
   const NewExercisePage({super.key});
