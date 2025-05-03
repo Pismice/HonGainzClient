@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:fronte/models/stats.dart';
+import 'package:fronte/endpoints/stats.dart';
 
 class TemplateExerciseChartPage extends StatefulWidget {
   final int templateExerciseID;

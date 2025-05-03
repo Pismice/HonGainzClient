@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fronte/models/template_exercises.dart';
-import 'package:fronte/stats/template_exercise_chart_page.dart';
+import 'package:fronte/endpoints/template_exercises.dart';
+import 'package:fronte/stats/exercises_pr_page.dart';
+import 'package:fronte/stats/session_history_page.dart';
 
 class StatsPage extends StatefulWidget {
   const StatsPage({super.key});
@@ -24,38 +25,41 @@ class _StatsPageState extends State<StatsPage> {
       appBar: AppBar(
         title: const Text("Stats"),
       ),
-      body: FutureBuilder<List<TemplateExercise>>(
-        future: _templateExercisesFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text("Error: ${snapshot.error}"));
-          } else if (snapshot.hasData) {
-            final exercises = snapshot.data!;
-            return ListView.builder(
-              itemCount: exercises.length,
-              itemBuilder: (context, index) {
-                final exercise = exercises[index];
-                return ListTile(
-                  title: Text(exercise.name),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => TemplateExerciseChartPage(
-                          templateExerciseID: exercise.id,
-                          exerciseName: exercise.name,
-                        ),
-                      ),
-                    );
-                  },
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) =>
+                        const ExercisesPRPage(), // Navigate to the exercises screen
+                  ),
                 );
               },
-            );
-          } else {
-            return const Center(child: Text("No exercises available."));
-          }
-        },
+              child: const Text(
+                "View the progress of your exercises",
+                style: TextStyle(fontSize: 18, color: Colors.blue),
+              ),
+            ),
+            const SizedBox(height: 16), // Add spacing between buttons
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) =>
+                        const SessionHistoryPage(), // Navigate to the session history screen
+                  ),
+                );
+              },
+              child: const Text(
+                "View your session history",
+                style: TextStyle(fontSize: 18, color: Colors.blue),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
