@@ -12,13 +12,32 @@ class NewSessionPage extends StatefulWidget {
 
 class _NewSessionPageState extends State<NewSessionPage> {
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _filterController =
+      TextEditingController(); // Controller for filter textbox
   final List<int> _selectedExerciseIds = [];
   late Future<List<TemplateExercise>> _exercisesFuture;
+  List<TemplateExercise> _filteredExercises = []; // Filtered exercises list
 
   @override
   void initState() {
     super.initState();
     _exercisesFuture = fetchTemplateExercises(context); // Fetch exercises
+    _filterController
+        .addListener(_filterExercises); // Add listener for filtering
+  }
+
+  void _filterExercises() {
+    final query = _filterController.text.toLowerCase();
+    _exercisesFuture.then((exercises) {
+      setState(() {
+        _filteredExercises = query.isEmpty
+            ? exercises
+            : exercises
+                .where(
+                    (exercise) => exercise.name.toLowerCase().contains(query))
+                .toList();
+      });
+    });
   }
 
   Future<void> _createSession() async {
@@ -80,6 +99,49 @@ class _NewSessionPageState extends State<NewSessionPage> {
               ),
             ),
             const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _filterController,
+                    decoration: const InputDecoration(
+                      labelText: "Filter Exercises",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  onPressed: () {
+                    final filteredName = _filterController.text.trim();
+                    if (filteredName.isNotEmpty) {
+                      createExercise(
+                          filteredName); // Call createExercise with the name
+                      setState(() {
+                        _exercisesFuture = fetchTemplateExercises(context);
+                        _filterExercises();
+                        _exercisesFuture.then((exercises) {
+                          if (exercises.isNotEmpty) {
+                            final lastExerciseId = exercises
+                                .last.id; // Get the ID of the last exercise
+                            _selectedExerciseIds.add(
+                                lastExerciseId); // Add it to the selected IDs
+                          }
+                        });
+                      });
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content:
+                                Text("Enter a name to create an exercise")),
+                      );
+                    }
+                  },
+                  child: const Text("Add"),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
             Expanded(
               child: FutureBuilder<List<TemplateExercise>>(
                 future: _exercisesFuture,
@@ -89,7 +151,12 @@ class _NewSessionPageState extends State<NewSessionPage> {
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else if (snapshot.hasData) {
-                    final exercises = snapshot.data!;
+                    final exercises = _filterController.text.isEmpty
+                        ? snapshot.data!
+                        : _filteredExercises;
+                    if (exercises.isEmpty) {
+                      return const SizedBox(); // Display nothing if no matches
+                    }
                     return ListView.builder(
                       itemCount: exercises.length,
                       itemBuilder: (context, index) {
@@ -112,7 +179,7 @@ class _NewSessionPageState extends State<NewSessionPage> {
                       },
                     );
                   } else {
-                    return const Text('No exercises found.');
+                    return const SizedBox(); // Display nothing if no data
                   }
                 },
               ),

@@ -35,7 +35,13 @@ Future<List<int>> fetchAllWeights(int templateExerciseID) async {
     });
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
-      return (data["weights"] as List).map((weight) => weight as int).toList();
+      if (data["weights"] != null) {
+        return (data["weights"] as List)
+            .map((weight) => weight as int)
+            .toList();
+      } else {
+        return []; // Return an empty list if "weights" is null
+      }
     } else {
       final error = json.decode(response.body)['error'];
       if (error == "Invalid session") {

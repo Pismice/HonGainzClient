@@ -104,3 +104,33 @@ Future<void> deleteExercise(int id) async {
     print('Error deleting exercise: $e');
   }
 }
+
+Future<void> createExercise(String name) async {
+  if (name.isEmpty) {
+    throw Exception("Exercise name cannot be empty");
+  }
+
+  var url = Uri.parse('${baseUrl}auth/template-exercises'); // API endpoint
+  try {
+    final response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${await storage.read(key: "session_id")}"
+      },
+      body: convert.json.encode({'name': name}),
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print("Exercise created successfully");
+    } else {
+      final error = convert.json.decode(response.body)['error'];
+      if (error == "Invalid session") {
+        throw Exception("InvalidSessionError"); // Specific error
+      }
+      throw Exception('Failed to create exercise: $error'); // General error
+    }
+  } catch (e) {
+    throw Exception('Error creating exercise: $e'); // Propagate the error
+  }
+}
