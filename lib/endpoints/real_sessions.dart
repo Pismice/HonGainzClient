@@ -26,6 +26,7 @@ class RealSession {
   factory RealSession.fromJson(Map<String, dynamic> json) {
     return RealSession(
       id: json['id'],
+      name: json.containsKey('name') ? json['name'] : null, // Check for "name"
       templateSessionId: json['template_session_id'],
       realWorkoutId: json['real_workout_id'],
       startDate: json['start_date'] == ""

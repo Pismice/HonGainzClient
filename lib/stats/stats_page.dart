@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fronte/endpoints/template_exercises.dart';
 import 'package:fronte/stats/exercises_pr_page.dart';
 import 'package:fronte/stats/session_history_page.dart';
 
@@ -11,12 +10,9 @@ class StatsPage extends StatefulWidget {
 }
 
 class _StatsPageState extends State<StatsPage> {
-  late Future<List<TemplateExercise>> _templateExercisesFuture;
-
   @override
   void initState() {
     super.initState();
-    _templateExercisesFuture = fetchTemplateExercises(context);
   }
 
   @override
