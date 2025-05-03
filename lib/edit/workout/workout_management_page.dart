@@ -39,9 +39,17 @@ class _WorkoutManagementPageState extends State<WorkoutManagementPage> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _navigateToNewWorkoutPage,
-        child: const Icon(Icons.add),
+      floatingActionButton: SizedBox(
+        width: 100, // Increase the width of the button
+        height: 100, // Increase the height of the button
+        child: FloatingActionButton(
+          onPressed: _navigateToNewWorkoutPage,
+          backgroundColor: Colors.green, // Make the button green
+          child: const Icon(
+            Icons.add,
+            size: 50, // Adjust the icon size
+          ),
+        ),
       ),
     );
   }

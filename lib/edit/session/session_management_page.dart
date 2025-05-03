@@ -39,13 +39,18 @@ class _SessionManagementPageState extends State<SessionManagementPage> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _navigateToNewSessionPage,
-        child: const Icon(Icons.add),
+      floatingActionButton: SizedBox(
+        width: 100, // Increase the width of the button
+        height: 100, // Increase the height of the button
+        child: FloatingActionButton(
+          onPressed: _navigateToNewSessionPage,
+          backgroundColor: Colors.green, // Make the button green
+          child: const Icon(
+            Icons.add,
+            size: 50, // Adjust the icon size
+          ),
+        ),
       ),
     );
   }
 }
-
-
-

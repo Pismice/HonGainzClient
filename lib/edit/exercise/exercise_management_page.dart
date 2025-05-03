@@ -39,12 +39,18 @@ class _ExerciseManagementPageState extends State<ExerciseManagementPage> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _navigateToNewExercisePage,
-        child: const Icon(Icons.add),
+      floatingActionButton: SizedBox(
+        width: 100, // Increase the width of the button
+        height: 100, // Increase the height of the button
+        child: FloatingActionButton(
+          onPressed: _navigateToNewExercisePage,
+          backgroundColor: Colors.green, // Make the button green
+          child: const Icon(
+            Icons.add,
+            size: 50,
+          ),
+        ),
       ),
     );
   }
 }
-
-
