@@ -47,7 +47,7 @@ class RealExercise {
 
   Future<void> registerSet({
     required int reps,
-    required int weight,
+    required double weight,
   }) async {
     var url = Uri.parse("${baseUrl}auth/register-set"); // API endpoint
     try {

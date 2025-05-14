@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:fronte/globals.dart';
 import 'package:fronte/endpoints/real_sessions.dart'; // Import RealSession model
 
-Future<int?> fetchMaxWeight(int templateExerciseID) async {
+Future<double?> fetchMaxWeight(int templateExerciseID) async {
   var url = Uri.parse(
       '${baseUrl}auth/stats/max-weight/$templateExerciseID'); // Updated to use Uri.parse
   try {
@@ -13,7 +13,7 @@ Future<int?> fetchMaxWeight(int templateExerciseID) async {
     });
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
-      return data["max_weight"] as int?;
+      return (data["max_weight"] as num?)?.toDouble(); // Convert to double
     } else {
       final error = json.decode(response.body)['error'];
       if (error == "Invalid session") {

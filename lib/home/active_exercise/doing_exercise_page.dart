@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fronte/endpoints/real_exercises.dart';
 import 'package:fronte/endpoints/stats.dart'; // Import fetchMaxWeight
 import 'package:confetti/confetti.dart'; // Import Confetti package
+import 'package:flutter/services.dart'; // Import for FilteringTextInputFormatter
 
 class DoingExercisePage extends StatefulWidget {
   final RealExercise exercise;
@@ -31,7 +32,7 @@ class _DoingExercisePageState extends State<DoingExercisePage> {
     super.dispose();
   }
 
-  Future<int?> _fetchMaxWeight() async {
+  Future<double?> _fetchMaxWeight() async {
     try {
       return await fetchMaxWeight(
           widget.exercise.templateExerciseId ?? 0); // Fetch max weight
@@ -51,7 +52,7 @@ class _DoingExercisePageState extends State<DoingExercisePage> {
           Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: FutureBuilder<int?>(
+              child: FutureBuilder<double?>(
                 future: _fetchMaxWeight(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -88,7 +89,8 @@ class _DoingExercisePageState extends State<DoingExercisePage> {
                         const SizedBox(height: 32), // Increased spacing
                         TextField(
                           controller: weightController,
-                          keyboardType: TextInputType.number,
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true),
                           decoration: const InputDecoration(
                             labelText: "Weight",
                             labelStyle:
@@ -97,11 +99,15 @@ class _DoingExercisePageState extends State<DoingExercisePage> {
                           ),
                           style: const TextStyle(
                               fontSize: 22.0), // Even larger input text
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d+([.,]\d{0,10})?$')),
+                          ], // Allow numbers with commas or dots
                         ),
                         const SizedBox(height: 32), // Increased spacing
                         if (maxWeight != null)
                           Text(
-                            "Current PR : $maxWeight kg",
+                            "Current PR : ${maxWeight.toStringAsFixed(2)} kg",
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineMedium
@@ -116,8 +122,8 @@ class _DoingExercisePageState extends State<DoingExercisePage> {
                             ElevatedButton(
                               onPressed: () async {
                                 final reps = int.tryParse(repsController.text);
-                                final weight =
-                                    int.tryParse(weightController.text);
+                                final weight = double.tryParse(
+                                    weightController.text.replaceAll(',', '.'));
 
                                 if (reps == null || weight == null) {
                                   ScaffoldMessenger.of(context).showSnackBar(
