@@ -101,4 +101,31 @@ class RealExercise {
       throw Exception('Error finishing exercise: $e'); // Propagate the error
     }
   }
+
+  Future<int> getRealSetsCount() async {
+    var url = Uri.parse("${baseUrl}auth/real-sets/count/$id"); // API endpoint
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "Bearer ${await storage.read(key: "session_id")}"
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data['real_sets_count']; // Return the count
+      } else {
+        final error = jsonDecode(response.body)['error'];
+        if (error == "Invalid session") {
+          throw Exception("InvalidSessionError"); // Specific error
+        }
+        throw Exception(
+            'Failed to fetch real sets count: $error'); // General error
+      }
+    } catch (e) {
+      throw Exception(
+          'Error fetching real sets count: $e'); // Propagate the error
+    }
+  }
 }

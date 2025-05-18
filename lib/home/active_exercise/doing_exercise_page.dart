@@ -18,12 +18,14 @@ class _DoingExercisePageState extends State<DoingExercisePage> {
   final TextEditingController weightController = TextEditingController();
   int setCount = 0; // Counter for the number of sets submitted
   late ConfettiController _confettiController; // Confetti controller
+  int realSetsCount = 0; // Variable to store the number of sets
 
   @override
   void initState() {
     super.initState();
     _confettiController =
         ConfettiController(duration: const Duration(seconds: 2));
+    _fetchRealSetsCount(); // Fetch the initial count of sets
   }
 
   @override
@@ -38,6 +40,19 @@ class _DoingExercisePageState extends State<DoingExercisePage> {
           widget.exercise.templateExerciseId ?? 0); // Fetch max weight
     } catch (e) {
       throw Exception('Error fetching max weight: $e');
+    }
+  }
+
+  Future<void> _fetchRealSetsCount() async {
+    try {
+      final count = await widget.exercise.getRealSetsCount();
+      setState(() {
+        realSetsCount = count; // Update the count
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error fetching set count: $e')),
+      );
     }
   }
 
@@ -65,7 +80,7 @@ class _DoingExercisePageState extends State<DoingExercisePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Sets done: $setCount",
+                          "Sets done: $realSetsCount", // Display real sets count
                           style: Theme.of(context)
                               .textTheme
                               .headlineLarge
@@ -144,8 +159,9 @@ class _DoingExercisePageState extends State<DoingExercisePage> {
                                             'Set registered successfully')),
                                   );
                                   setState(() {
-                                    setCount++; // Increment the set count
+                                    setCount++; // Increment the local set count
                                   });
+                                  _fetchRealSetsCount(); // Refresh real sets count
                                   _confettiController
                                       .play(); // Trigger confetti
                                 } catch (e) {
