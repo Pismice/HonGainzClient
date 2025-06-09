@@ -43,17 +43,6 @@ class _SessionListState extends State<SessionList> {
         }
 
         return Container(
-          decoration: session.startDate == null && session.finishDate == null
-              ? BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Colors.orange, Colors.purple],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius:
-                      BorderRadius.circular(16.0), // Match card corners
-                )
-              : null,
           padding: session.startDate == null && session.finishDate == null
               ? const EdgeInsets.all(0.0) // Reduced border thickness
               : null,
@@ -69,8 +58,8 @@ class _SessionListState extends State<SessionList> {
               ),
               title: Text(
                 session.name ?? "Unnamed Session",
-                style:
-                    const TextStyle(color: Colors.white), // White text for dark mode
+                style: const TextStyle(
+                    color: Colors.white), // White text for dark mode
               ),
               trailing: session.finishDate != null
                   ? const Icon(Icons.check,

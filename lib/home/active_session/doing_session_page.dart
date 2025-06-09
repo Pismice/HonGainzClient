@@ -59,7 +59,10 @@ class _DoingSessionState extends State<DoingSession> {
     _timer?.cancel(); // Cancel any existing timer
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        _elapsedSeconds++;
+        if (widget.session.startDate != null) {
+          final startDate = DateTime.parse(widget.session.startDate!);
+          _elapsedSeconds = DateTime.now().difference(startDate).inSeconds;
+        }
       });
     });
   }
