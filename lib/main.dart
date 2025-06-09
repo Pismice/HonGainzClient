@@ -33,7 +33,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.dark,
         colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.blue, brightness: Brightness.dark),
+            seedColor: const Color.fromARGB(255, 255, 17, 0),
+            brightness: Brightness.dark),
         useMaterial3: true,
       ),
       home: isLoggedIn ? const NavigationHome() : const IntroductionPage(),
